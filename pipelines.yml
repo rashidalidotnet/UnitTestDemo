@@ -25,7 +25,6 @@ pipelines:
           name: Build
           caches:
             - dotnetcore
-          script: # Modify the commands below to build your repository
             - export SOLUTION_PATH=./
             - sed -i -e "s|__NUGET_PAT__|$NUGET_PAT|g" nuget.config
             - dotnet restore $SOLUTION_PATH
