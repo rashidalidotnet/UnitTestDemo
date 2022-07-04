@@ -1,0 +1,34 @@
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: mcr.microsoft.com/dotnet/core/sdk:3.1-bionic
+
+options:
+  size: 2x
+
+definitions:
+  services:
+    docker:
+      memory: 7128
+
+pipelines:
+  custom:
+    production-us-east-1:
+      - step:
+          name: "PROD US-EAST-1"
+          deployment: production-us-east-1
+          <<: *commonBuildAndDeploy
+  branches:
+    develop:
+      - step:
+          name: Build
+          caches:
+            - dotnetcore
+          script: # Modify the commands below to build your repository
+            - export SOLUTION_PATH=./
+            - sed -i -e "s|__NUGET_PAT__|$NUGET_PAT|g" nuget.config
+            - dotnet restore $SOLUTION_PATH
+            - dotnet build $SOLUTION_PATH -c $BUILD_CONFIGURATION
+            - dotnet test $SOLUTION_PATH
+            - dotnet test $TESTS

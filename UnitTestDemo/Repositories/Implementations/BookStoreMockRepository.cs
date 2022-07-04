@@ -13,13 +13,7 @@ namespace UnitTestDemo.Repositories.Implementations
         private List<Book> _books;
         public BookStoreMockRepository()
         {
-            _books = new List<Book>(){
-                new Book(){ Id = 1, Title = "Harry Potter", Price = 200, Author = new Author(){ Id = 1, Name = "J. K. Rowling" } },
-                new Book(){ Id = 2, Title = "The Great Gatsby", Price = 100, Author = new Author(){ Id = 2, Name = "F. Scott Fitzgerald" } },
-                new Book(){ Id = 3, Title = "The Silk Roads", Price = 50, Author = new Author(){ Id = 3, Name = "Peter Frankopan" } },
-                new Book(){ Id = 4, Title = "Grant", Price = 120, Author = new Author(){ Id = 4, Name = "Ron Chernow" } },
-                new Book(){ Id = 5, Title = "Steve Jobs", Price = 190, Author = new Author(){ Id = 5, Name = "Walter Isaacson" } }
-            };
+            Initialize();
         }
 
         public Task<T> FindGeneric<T>(Expression<Func<T, bool>> predicate) where T : class
@@ -51,6 +45,17 @@ namespace UnitTestDemo.Repositories.Implementations
         {
             _books.Add(book);
             return book;
+        }
+
+        private void Initialize()
+        {
+            _books = new List<Book>(){
+                new Book(){ Id = 1, Title = "Harry Potter", Price = 200, Author = new Author(){ Id = 1, Name = "J. K. Rowling" } },
+                new Book(){ Id = 2, Title = "The Great Gatsby", Price = 100, Author = new Author(){ Id = 2, Name = "F. Scott Fitzgerald" } },
+                new Book(){ Id = 3, Title = "The Silk Roads", Price = 50, Author = new Author(){ Id = 3, Name = "Peter Frankopan" } },
+                new Book(){ Id = 4, Title = "Grant", Price = 120, Author = new Author(){ Id = 4, Name = "Ron Chernow" } },
+                new Book(){ Id = 5, Title = "Steve Jobs", Price = 190, Author = new Author(){ Id = 5, Name = "Walter Isaacson" } }
+            };
         }
     }
 }
